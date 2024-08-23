@@ -1,0 +1,83 @@
+<?php 
+include 'admin/handle/connection.php';
+
+?>
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>ALL PRODUCTS - HAYAH LABORATORIES</title>
+  <meta name="description" content="">
+  <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+  <link rel="icon" type="image/x-icon" href="assets/images/Logo.webp">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="">
+    <style>
+        a i{
+            text-decoration: none;
+            color: black;
+        }
+    </style>
+</head>
+
+<body class="bg-body-tertiary">
+    <?php include 'nav.php' ?>
+    <!-- first section -->
+
+    <section class="container py-5">
+        <h1 class="text-center py-5" >All Products</h1>
+        <div class="row gy-4">
+            <?php
+        
+
+            $query = "select * from products";
+            $result = mysqli_query($connection, $query);
+
+            if ($result) {
+                $products = mysqli_fetch_all($result, MYSQLI_ASSOC);
+
+                foreach ($products as $product) {
+
+
+            ?>
+                    <div class="col-md-3">
+                        <div class="card border-0 shadow-sm p-3 rounded-3 h-100">
+                            <img src="admin/images/<?php echo $product['image'] ?>" class="card-img-top" alt="">
+                            <div class="card-body text-center">
+                                <h5 class="card-title"><?php echo $product['name'] ?></h5>
+                                <p class="card-text"><?php echo $product['price'] . " EGP" ?></p>
+                                <a href="admin/handle/addTowishlist.php?id=<?php echo $product['id'] ?>" class="text-decoration-none ">                                
+                                    <i class="fa-regular fa-heart fs-3 pe-3 " title="Add to wishlist" style="cursor:pointer"></i>
+                                </a>
+                                <a href="admin/handle/addTocart.php?id=<?php echo $product['id'] ?>" class="btn ">Add to cart</a>
+                            </div>
+                        </div>
+
+                    </div>
+            <?php
+
+                }
+            } else {
+
+                echo "There are no products";
+            }
+
+            ?>
+        </div>
+
+    </section>
+
+    <!-- End of first section -->
+
+
+
+
+    <?php require_once 'footer.php'?>
+
+
+    <script src="" async defer></script>
+</body>
+
+</html>
